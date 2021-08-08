@@ -2,6 +2,7 @@ package com.example.davesmithtouchexample.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -11,7 +12,9 @@ import android.widget.OverScroller;
 
 public class TwoDimensionScrollView extends FrameLayout {
 
-    //Fling components
+	public static final String TAG = "TwoDimensionScrollView";
+
+	//Fling components
 	private OverScroller mScroller;
     private VelocityTracker mVelocityTracker;
 
@@ -197,7 +200,7 @@ public class TwoDimensionScrollView extends FrameLayout {
                 if (yDiff > mTouchSlop || xDiff > mTouchSlop) {
                     mDragging = true;
                     mVelocityTracker.addMovement(event);
-                    //Start capturing events ourselves
+                    //Start capturing events ourselves !!
                     return true;
                 }
                 break;
@@ -208,7 +211,10 @@ public class TwoDimensionScrollView extends FrameLayout {
                 break;
         }
 
-        return super.onInterceptTouchEvent(event);
+		boolean b = super.onInterceptTouchEvent(event);
+        Log.i(TAG, "MotionEvent.Action: " + event.getAction());
+		Log.i(TAG, "super.onInterceptTouchEvent(event): " + b);
+        return b;
     }
 
     /*
@@ -261,6 +267,9 @@ public class TwoDimensionScrollView extends FrameLayout {
                 }
                 break;
         }
-        return super.onTouchEvent(event);
+
+		boolean b = super.onTouchEvent(event);
+		Log.i(TAG, "super.onTouchEvent(event): " + b);
+        return b;
     }
 }

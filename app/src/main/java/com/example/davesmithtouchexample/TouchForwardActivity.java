@@ -6,6 +6,7 @@
 package com.example.davesmithtouchexample;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
@@ -16,6 +17,8 @@ import com.example.davesmithtouchexample.widget.TouchForwardLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class TouchForwardActivity extends AppCompatActivity {
+
+	public static final String TAG = "TouchForwardActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,5 +33,10 @@ public class TouchForwardActivity extends AppCompatActivity {
                 LayoutParams.WRAP_CONTENT, Gravity.CENTER);
 		layout.addView(button, lp);
 		setContentView(layout);
+
+		button.setOnTouchListener((v, event) -> {
+			Log.i(TAG, "button: " + event.getAction());
+			return false;
+		});
 	}
 }

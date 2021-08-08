@@ -8,13 +8,16 @@ package com.example.davesmithtouchexample.widget;
 import android.content.Context;
 import android.graphics.Point;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
 public class TouchForwardLayout extends FrameLayout {
 
-    private Point mTouchOffsetPoint = new Point();
+	public static final String TAG = "TouchForwardLayout";
+
+	private Point mTouchOffsetPoint = new Point();
 
 	public TouchForwardLayout(Context context) {
 		super(context);
@@ -33,11 +36,11 @@ public class TouchForwardLayout extends FrameLayout {
 		//Don't let any touches be passed down to the children automatically
 		return true;
 	}
-	
+
 	/*
 	 * In onTouchEvent(), we pass all the touches we receive directly to the
 	 * first child by calling its dispatchTouchEvent() method.
-	 * 
+	 *
 	 * Note that, we modify the event so the initial location of the touch will
 	 * will report as being centered in the view we are forwarding to.  Each event after
 	 * this will be offset by the same amount, which creates the effect that the finger. This may have consequences depending on the reasoning for forwarding the event.
@@ -56,11 +59,15 @@ public class TouchForwardLayout extends FrameLayout {
             mTouchOffsetPoint.x = (int)event.getX();
             mTouchOffsetPoint.y = (int)event.getY();
         }
+		Log.i(TAG, "x: " + event.getX() + ", y: " + event.getY());
 
         //Massage the event to be offset from the first touch
+        // Note, if trying to comment the lines below and see the result ,
+		// you'll see Button's style still changes on Down, but recovered once moved.
+		// The logic is handled by Button's style.
         event.offsetLocation(-mTouchOffsetPoint.x + child.getWidth() / 2,
                 -mTouchOffsetPoint.y + child.getHeight() / 2);
-		
-		return child.dispatchTouchEvent(event);		
+
+		return child.dispatchTouchEvent(event);
 	}
 }
