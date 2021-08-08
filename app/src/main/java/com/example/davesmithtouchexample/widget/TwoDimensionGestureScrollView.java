@@ -2,6 +2,7 @@ package com.example.davesmithtouchexample.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -185,9 +186,7 @@ public class TwoDimensionGestureScrollView extends FrameLayout {
             case MotionEvent.ACTION_DOWN:
                 mInitialX = event.getX();
                 mInitialY = event.getY();
-                //Feed the down event to the detector so it has
-                // context when/if dragging begins
-                mDetector.onTouchEvent(event);
+				Log.i("kaka", "Action_Down");
                 break;
             case MotionEvent.ACTION_MOVE:
                 final float x = event.getX();
